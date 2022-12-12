@@ -77,15 +77,18 @@ export default {
   methods: {
     goSearch() {
       let locations = {
-        name: "search",
-        params: { keyword: this.keyword || undefined },
+        name: "Search",
+        params: {keyword: this.keyword || undefined},
+        query: { k: this.keyword}
       };
+
       //确定路径当中有query参数
-      if (this.$route.query.categoryName) {
-        locations.query = this.$route.query;
-      }
+      // if (this.$route.query.categoryName) {
+      //   locations.query = this.$route.query;
+      // }
 
       this.$router.push(locations);
+
     },
     logout() {
       //派遣action退出登录
