@@ -5,4 +5,6 @@ http://gmall-h5-api.atguigu.cn
 #### 需要的插件
 ###### [Nprogress进度条](https://github.com/rstacruz/nprogress)
 npm install --save nprogerss --legacy-peer-deps
+###### [Lodash](https://www.lodashjs.com/)
+npm i --save lodash --legacy-peer-deps
 
