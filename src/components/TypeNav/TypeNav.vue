@@ -5,24 +5,30 @@
       <div @mouseleave="leaveIndex">
         <h2 class="all">全部商品分类</h2>
         <div class="sort">
-          <div class="all-sort-list2">
+          <div class="all-sort-list2" @click="goSearch">
             <div class="item"
                  v-for="(c1, index) in categoryList"
                  :key="c1.categoryId"
                  :class="{cur: currentIndex == index}">
               <h3 @mouseenter="changeIndex(index)">
-                <a href="">{{c1.categoryName}}</a>
+                <a href="javascript:;"
+                   :data-categoryname="c1.categoryName"
+                   :data-category1Id="c1.categoryId">{{c1.categoryName}}</a>
               </h3>
               <div class="item-list clearfix"
                    :style="{display: currentIndex == index ? 'block' : 'none'}">
                 <div class="subitem" v-for="(c2) in c1.categoryChild" :key="c2.categoryId">
                   <dl class="fore">
                     <dt>
-                      <a href="">{{c2.categoryName}}</a>
+                      <a href="javascript:;"
+                         :data-categoryname="c2.categoryName"
+                         :data-category2Id="c2.categoryId">{{c2.categoryName}}</a>
                     </dt>
                     <dd>
                       <em v-for="(c3) in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{c3.categoryName}}</a>
+                        <a href="javascript:;"
+                           :data-categoryname="c3.categoryName"
+                           :data-category3Id="c3.categoryId">{{c3.categoryName}}</a>
                       </em>
                     </dd>
                   </dl>
@@ -51,6 +57,8 @@
 
 <script>
 import {mapState} from 'vuex'
+import {throttle} from "lodash";
+
 export default {
   name: 'TypeNav',
   data() {
@@ -60,11 +68,48 @@ export default {
     }
   },
   methods: {
-    changeIndex(index) {
+    // changeIndex(index) {
+    //   this.currentIndex = index
+    // },
+    changeIndex:throttle(function (index) {
       this.currentIndex = index
-    },
+    }, 50),
     leaveIndex() {
       this.currentIndex = -1
+    },
+    goSearch: function (event) {
+      // 利用事件委派存在一些问题：
+      //  1. 点击的一定是a标签？
+      //  2. 如何获取参数
+
+      // 获取当前事件的节点，需要带有 :data-categoryname 自定义属性的一定是a标签
+      let element = event.target
+
+      // 节点有一个属性dataset属性，可以获取节点的自定义属性与属性值
+      let {categoryname,category1id,category2id,category3id} = element.dataset;
+      // 如果标签有 就一定是a标签
+      if (categoryname) {
+        // 整理路由跳转的参数
+        let location = {name: 'Search'}
+        let query = {categoryName: categoryname}
+        // 如何判断是否一级，二级，三级分类
+        if (category1id) {
+          console.log('一级分类')
+          query.category1Id = category1id
+        } else if (category2id) {
+          console.log('二级分类')
+          query.category2Id = category2id
+        } else if (category3id) {
+          console.log('三级分类')
+          query.category3Id = category3id
+        }
+
+        // 整理完参数
+        location.query = query
+        // 路由跳转
+        this.$router.push(location)
+      }
+
     }
   },
   // 组件加载完毕后可以向服务器发请求
