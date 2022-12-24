@@ -15,6 +15,10 @@ export default {
   components: {
     HeaIndex,
     FooIndex
+  },
+  mounted() {
+    // 通过Vuex发送请求，存储与仓库中 派发一个action
+    this.$store.dispatch('categoryList');
   }
 }
 </script>
