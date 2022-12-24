@@ -78,7 +78,7 @@ export default {
     goSearch() {
       let locations = {
         name: "Search",
-        params: {keyword: this.keyword || undefined},
+        params: {keyword: '' || undefined},
         query: { k: this.keyword}
       };
 
