@@ -2,9 +2,9 @@
   <div class="type-nav">
     <div class="container">
 
-      <div @mouseleave="leaveIndex">
+      <div @mouseleave="leaveIndex" @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
+        <div class="sort" v-show="show">
           <div class="all-sort-list2" @click="goSearch">
             <div class="item"
                  v-for="(c1, index) in categoryList"
@@ -64,7 +64,8 @@ export default {
   data() {
     return {
       // 存储鼠标移上哪一个一级分类
-      currentIndex: -1
+      currentIndex: -1,
+      show: true
     }
   },
   methods: {
@@ -76,6 +77,9 @@ export default {
     }, 50),
     leaveIndex() {
       this.currentIndex = -1
+      if (this.$route.path !== '/home') {
+        this.show = false
+      }
     },
     goSearch: function (event) {
       // 利用事件委派存在一些问题：
@@ -110,19 +114,25 @@ export default {
         this.$router.push(location)
       }
 
+    },
+    // 鼠标移入，show变成true
+    enterShow() {
+      this.show = true
     }
   },
   // 组件加载完毕后可以向服务器发请求
   mounted() {
     // 通过Vuex发送请求，存储与仓库中
     this.$store.dispatch('categoryList');
+    if (this.$route.path !== '/home') {
+      this.show = false
+    }
   },
   computed: {
     ...mapState({
       // 右侧需要的是一个函数，当使用这个计算属性时，右侧函数会立即执行一次
       // 注入一个state，其实即为大仓库的数据
       categoryList: (state) => {
-
         return state.home.categoryList;
       }
     })
