@@ -4,39 +4,42 @@
 
       <div @mouseleave="leaveIndex" @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort" v-show="show">
-          <div class="all-sort-list2" @click="goSearch">
-            <div class="item"
-                 v-for="(c1, index) in categoryList"
-                 :key="c1.categoryId"
-                 :class="{cur: currentIndex == index}">
-              <h3 @mouseenter="changeIndex(index)">
-                <a href="javascript:;"
-                   :data-categoryname="c1.categoryName"
-                   :data-category1Id="c1.categoryId">{{c1.categoryName}}</a>
-              </h3>
-              <div class="item-list clearfix"
-                   :style="{display: currentIndex == index ? 'block' : 'none'}">
-                <div class="subitem" v-for="(c2) in c1.categoryChild" :key="c2.categoryId">
-                  <dl class="fore">
-                    <dt>
-                      <a href="javascript:;"
-                         :data-categoryname="c2.categoryName"
-                         :data-category2Id="c2.categoryId">{{c2.categoryName}}</a>
-                    </dt>
-                    <dd>
-                      <em v-for="(c3) in c2.categoryChild" :key="c3.categoryId">
+        <!--过渡动画-->
+        <transition name="sort">
+          <div class="sort" v-show="show">
+            <div class="all-sort-list2" @click="goSearch">
+              <div class="item"
+                   v-for="(c1, index) in categoryList"
+                   :key="c1.categoryId"
+                   :class="{cur: currentIndex == index}">
+                <h3 @mouseenter="changeIndex(index)">
+                  <a href="javascript:;"
+                     :data-categoryname="c1.categoryName"
+                     :data-category1Id="c1.categoryId">{{c1.categoryName}}</a>
+                </h3>
+                <div class="item-list clearfix"
+                     :style="{display: currentIndex == index ? 'block' : 'none'}">
+                  <div class="subitem" v-for="(c2) in c1.categoryChild" :key="c2.categoryId">
+                    <dl class="fore">
+                      <dt>
                         <a href="javascript:;"
-                           :data-categoryname="c3.categoryName"
-                           :data-category3Id="c3.categoryId">{{c3.categoryName}}</a>
-                      </em>
-                    </dd>
-                  </dl>
+                           :data-categoryname="c2.categoryName"
+                           :data-category2Id="c2.categoryId">{{c2.categoryName}}</a>
+                      </dt>
+                      <dd>
+                        <em v-for="(c3) in c2.categoryChild" :key="c3.categoryId">
+                          <a href="javascript:;"
+                             :data-categoryname="c3.categoryName"
+                             :data-category3Id="c3.categoryId">{{c3.categoryName}}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
 
       <nav class="nav">
@@ -122,8 +125,7 @@ export default {
   },
   // 组件加载完毕后可以向服务器发请求
   mounted() {
-    // 通过Vuex发送请求，存储与仓库中
-    this.$store.dispatch('categoryList');
+
     if (this.$route.path !== '/home') {
       this.show = false
     }
@@ -262,6 +264,20 @@ export default {
           background: #a6a6ef;
         }
       }
+    }
+
+    // 过渡动画的样式
+    // 过渡动画开始状态
+    .sort-enter {
+      height: 0px;
+    }
+    // 过渡动画的结束状态
+    .sort-enter-to {
+      height: 461px;
+    }
+    // 定义动画的时间，速率
+    .sort-enter-active {
+      transition: all .5s linear;
     }
   }
 }
