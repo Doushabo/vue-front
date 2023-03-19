@@ -119,9 +119,6 @@ export default {
           // 路由跳转
           this.$router.push(location)
         }
-
-
-
       }
 
     },
@@ -132,7 +129,6 @@ export default {
   },
   // 组件加载完毕后可以向服务器发请求
   mounted() {
-
     if (this.$route.path !== '/home') {
       this.show = false
     }
@@ -278,6 +274,7 @@ export default {
     .sort-enter {
       height: 0px;
     }
+
     // 过渡动画的结束状态
     .sort-enter-to {
       height: 461px;
@@ -285,7 +282,9 @@ export default {
     // 定义动画的时间，速率
     .sort-enter-active {
       transition: all .5s linear;
+      overflow: hidden;
     }
+
   }
 }
 </style>

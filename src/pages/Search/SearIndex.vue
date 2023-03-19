@@ -7,10 +7,9 @@
 <script>
 export default {
   name: "SearIndex",
-
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 </style>
