@@ -35,7 +35,7 @@ requests.interceptors.response.use((res) => {
     nprogress.done();
     return res.data
 }, () => {
-    return Promise.reject(new Error('fale'))
+    return Promise.reject(new Error('false'))
 })
 
 
