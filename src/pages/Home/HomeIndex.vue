@@ -2,7 +2,7 @@
   <div>
     <!-- 需要使用三级联动Nav -->
     <TypeNav/>
-    <ConImages/>
+    <ListConIndex/>
     <RecIndex/>
     <RankIndex/>
     <LikeIndex/>
@@ -12,16 +12,16 @@
 </template>
 
 <script>
-import ConImages from "@/pages/Home/ListContainer/ConImages";
 import RecIndex from "@/pages/Home/Recommend/RecIndex";
 import RankIndex from "@/pages/Home/Rank/RankIndex";
 import LikeIndex from "@/pages/Home/Like/LikeIndex";
 import FloorIndex from "@/pages/Home/Floor/FloorIndex";
 import BrandIndex from "@/pages/Home/Brand/BrandIndex";
+import ListConIndex from "@/pages/Home/ListContainer/ListConIndex.vue";
 export default {
   name: "HomeIndex",
   components: {
-    ConImages,
+    ListConIndex,
     RecIndex,
     RankIndex,
     LikeIndex,
