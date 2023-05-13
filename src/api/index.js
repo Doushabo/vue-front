@@ -1,5 +1,6 @@
 // 当前模块： 对所有API接口进行统一管理
-import request from "@/api/request";
+import request from "@/api/ajax";
+import mockAjax from "@/api/mockAjax";
 
 
 /**
@@ -15,4 +16,12 @@ export const reqCategoryList = () => {
         method: "get"
     })
 }
+
+/**
+ * 获取轮播图
+ * url: /mock/banner
+ * get
+ * 无参
+ */
+export const reqBannerList = () => mockAjax.get('/banner');
 
