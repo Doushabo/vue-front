@@ -5,8 +5,8 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="../../../../public/images/banner1.jpg" />
+            <div class="swiper-slide" v-for="(carousel) in bannerList" :key="carousel.id" >
+              <img :src="carousel.imgUrl" />
             </div>
 <!--            <div class="swiper-slide">-->
 <!--              <img src="../../../assets/images/home/banner2.jpg" />-->
@@ -110,8 +110,47 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+import Swiper from "swiper";
+
 export default {
-  name: "ConImages"
+  name: "ListConIndex",
+  mounted() {
+    this.$store.dispatch('getBannerList');
+  },
+  computed: {
+    ...mapState({
+      bannerList: state => {
+        return state.home.bannerList;
+      }
+    })
+  },
+  watch: {
+    bannerList: {
+      // eslint-disable-next-line no-unused-vars
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          // eslint-disable-next-line no-unused-vars
+          var mySwiper = new Swiper (document.querySelector(".swiper-container"), {
+            loop: true,
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+
+            // 如果需要滚动条
+            scrollbar: '.swiper-scrollbar',
+          })
+        });
+      }
+    }
+  }
 }
 </script>
 
