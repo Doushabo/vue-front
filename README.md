@@ -5,13 +5,15 @@
 https://docschina.org/  
 
 ## 提供的接口
-http://gmall-h5-api.atguigu.cn  
+http://gmall-h5-api.atguigu.cn
 
 ## 需要的插件
-1. [Nprogress进度条](https://github.com/rstacruz/nprogress)  
-npm install --save nprogerss --legacy-peer-deps
-2. [Lodash](https://www.lodashjs.com/)  
-npm i --save lodash --legacy-peer-deps
-3. [Mock.js](http://mockjs.com/)  
-npm install mockjs --legacy-peer-deps
+- [Nprogress进度条](https://github.com/rstacruz/nprogress)  
+`npm install --save nprogerss --legacy-peer-deps`
+- [Lodash](https://www.lodashjs.com/)  
+`npm i --save lodash --legacy-peer-deps`
+- [Mock.js](http://mockjs.com/)  
+`npm install mockjs --legacy-peer-deps`
+- [Swiper](https://www.swiper.com.cn/)  
+`npm i swiper@5 --legacy-peer-deps`
 
