@@ -6,12 +6,13 @@
     <RecIndex/>
     <RankIndex/>
     <LikeIndex/>
-    <FloorIndex/>
+    <FloorIndex v-for="(floor) in floorList" :key="floor.id" :list = "floor"/>
     <BrandIndex/>
   </div>
 </template>
 
 <script>
+import {mapState} from "vuex";
 import RecIndex from "@/pages/Home/Recommend/RecIndex";
 import RankIndex from "@/pages/Home/Rank/RankIndex";
 import LikeIndex from "@/pages/Home/Like/LikeIndex";
@@ -27,6 +28,13 @@ export default {
     LikeIndex,
     FloorIndex,
     BrandIndex
+  },
+  mounted() {
+    // 派发action, 获取floor的数据
+    this.$store.dispatch("getFloorList");
+  },
+  computed: {
+    ...mapState({floorList: state => {return state.home.floorList;}})
   }
 }
 </script>
