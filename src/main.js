@@ -8,9 +8,12 @@ import '@/mock/mockServer';
 import "swiper/css/swiper.css"
 
 // 三级联动组件 注册为全局组件
-import TypeNav from "@/components/TypeNav/TypeNav";
+import TypeNav from "@/components/TypeNav/TypeNav.vue";
+// 轮播图 注册为全局组件
+import CarouselIndex from "@/components/Carousel/CarouselIndex.vue";
 
 Vue.component(TypeNav.name, TypeNav)
+Vue.component(CarouselIndex.name, CarouselIndex)
 
 
 Vue.config.productionTip = false
