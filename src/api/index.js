@@ -9,13 +9,12 @@ import mockAjax from "@/api/mockAjax";
  * get
  * 无参
  */
-export const reqCategoryList = () => {
+export const reqCategoryList = () => request.get("/product/getBaseCategoryList")
     // 发送请求
-    return request({
-        url: "/product/getBaseCategoryList",
-        method: "get"
-    })
-}
+    // return request({
+    //     url: "/product/getBaseCategoryList",
+    //     method: "get"
+    // })
 
 /**
  * 获取轮播图
