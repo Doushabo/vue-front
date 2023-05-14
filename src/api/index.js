@@ -23,5 +23,18 @@ export const reqCategoryList = () => {
  * get
  * 无参
  */
+//
 export const reqBannerList = () => mockAjax.get('/banner');
+/**
+ * 获取floors
+ * url: /mock/floors
+ * get
+ * 无参
+ */
+export const reqFloorsList = () => {
+    return mockAjax({
+        url: "/floors",
+        method: "get"
+    })
+}
 
