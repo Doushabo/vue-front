@@ -26,7 +26,6 @@ export default {
     actions: {
         async getSearchList({commit}, params={}) {
             let result = await reqGetSearchInfo(params);
-            console.log(result);
             if (result.code == 200) {
                 commit("GETSEARCHLIST", result.data);
             }
