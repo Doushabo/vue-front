@@ -161,12 +161,27 @@ export default {
     // this.searchParams.keyword = this.$route.params.keyword;
     // Object.assign: ES6新增语法，合并对象
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
+    console.log("发送请求前合并对象", this.searchParams);
   },
   mounted() {
     this.getData();
   },
   computed: {
       ...mapGetters(["goodsList"])
+  },
+  watch: {
+    // 监听路由变化
+    $route() {
+
+      // 每次变化，就会再次整理
+      Object.assign(this.searchParams, this.$route.query, this.$route.params)
+      this.getData();
+      this.searchParams.category1Id = '';
+      this.searchParams.category2Id = '';
+      this.searchParams.category3Id = '';
+      this.searchParams.categoryName = '';
+      this.searchParams.keyword = '';
+    }
   }
 
 }
