@@ -16,11 +16,11 @@ http://gmall-h5-api.atguigu.cn
 - [axios](https://www.axios-http.cn/)  
 `$ npm install axios --legacy-peer-deps`
 - [Nprogress进度条](https://github.com/rstacruz/nprogress)  
-`npm install --save nprogerss --legacy-peer-deps`
+`$ npm install --save nprogerss --legacy-peer-deps`
 - [Lodash](https://www.lodashjs.com/)  
-`npm i --save lodash --legacy-peer-deps`
+`$ npm i --save lodash --legacy-peer-deps`
 - [Mock.js](http://mockjs.com/)  
-`npm install mockjs --legacy-peer-deps`
+`$ npm install mockjs --legacy-peer-deps`
 - [Swiper](https://www.swiper.com.cn/)  
-`npm i swiper@5 --legacy-peer-deps`
+`$ npm i swiper@5 --legacy-peer-deps`
 
