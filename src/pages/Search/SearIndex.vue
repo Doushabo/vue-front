@@ -11,10 +11,10 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <!--<li class="with-x">手机</li>-->
+            <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">×</i></li>
+            <!--<li class="with-x">华为<i>×</i></li>-->
+            <!--<li class="with-x">OPPO<i>×</i></li>-->
           </ul>
         </div>
 
@@ -151,7 +151,20 @@ export default {
       let searchParams = this.searchParams;
       this.$store.dispatch("getSearchList", searchParams);
     },
-
+    removeCategoryName() {
+      // 将其清空
+      this.searchParams.categoryName = undefined;
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+      // 还需要向服务器发请求
+      this.getData();
+      // url也要改
+      // if (this.$route.params) {
+      //   this.$router.push({name: 'Search', params: this.$route.params})
+      // }
+      this.$router.push({name: 'Search', params: this.$route.params})
+    }
   },
   beforeMount() {
     // this.searchParams.category1Id = this.$route.query.category1Id;
@@ -172,15 +185,14 @@ export default {
   watch: {
     // 监听路由变化
     $route() {
-
-      // 每次变化，就会再次整理
-      Object.assign(this.searchParams, this.$route.query, this.$route.params)
-      this.getData();
       this.searchParams.category1Id = '';
       this.searchParams.category2Id = '';
       this.searchParams.category3Id = '';
       this.searchParams.categoryName = '';
       this.searchParams.keyword = '';
+      // 每次变化，就会再次整理
+      Object.assign(this.searchParams, this.$route.query, this.$route.params)
+      this.getData();
     }
   }
 
