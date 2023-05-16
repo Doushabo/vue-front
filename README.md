@@ -7,7 +7,14 @@ https://docschina.org/
 ## 提供的接口
 http://gmall-h5-api.atguigu.cn
 
-## 需要的插件
+## ⭐技术栈
+> [Vue.js](https://cn.vuejs.org/) + [Vuex](https://vuex.vuejs.org/zh/) + [Vue Router](https://router.vuejs.org/zh/guide/) 三件套  
+> 可以直接使用 [Vue-cli](https://cli.vuejs.org/) 来创建模板  
+> 安装脚手架后直接 `vue ui` 进入图形化界面
+
+### 额外添加
+- [axios](https://www.axios-http.cn/)  
+`$ npm install axios --legacy-peer-deps`
 - [Nprogress进度条](https://github.com/rstacruz/nprogress)  
 `npm install --save nprogerss --legacy-peer-deps`
 - [Lodash](https://www.lodashjs.com/)  
