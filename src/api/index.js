@@ -1,5 +1,5 @@
 // 当前模块： 对所有API接口进行统一管理
-import request from "@/api/ajax";
+import requests from "@/api/ajax";
 import mockAjax from "@/api/mockAjax";
 
 
@@ -9,7 +9,7 @@ import mockAjax from "@/api/mockAjax";
  * get
  * 无参
  */
-export const reqCategoryList = () => request.get("/product/getBaseCategoryList")
+export const reqCategoryList = () => requests.get("/product/getBaseCategoryList")
     // 发送请求
     // return request({
     //     url: "/product/getBaseCategoryList",
@@ -34,6 +34,21 @@ export const reqFloorsList = () => {
     return mockAjax({
         url: "/floors",
         method: "get"
+    })
+}
+
+/**
+ * 获取搜索的数据
+ * url: /api/list
+ * POST
+ * 有参
+ * 当前接口，给服务器传递一个空对象
+ */
+export const reqGetSearchInfo = (params) => {
+    return requests({
+        url: "/list",
+        method: "post",
+        data: params
     })
 }
 
