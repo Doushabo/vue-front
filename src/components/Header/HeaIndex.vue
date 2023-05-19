@@ -100,13 +100,12 @@ export default {
       this.$store.dispatch('logout');
     }
   },
-  // mounted() {
-  //   //清除关键字
-  //   this.$bus.$on("clearKeyword", () => {
-  //     console.log(123);
-  //     this.keyword = "";
-  //   });
-  // }
+  mounted() {
+    //清除关键字
+    this.$on("clearKeyword", () => {
+      this.keyword = "";
+    });
+  }
 }
 </script>
 

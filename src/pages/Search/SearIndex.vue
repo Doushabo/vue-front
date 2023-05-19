@@ -11,15 +11,15 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <!--<li class="with-x">手机</li>-->
             <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">×</i></li>
-            <!--<li class="with-x">华为<i>×</i></li>-->
-            <!--<li class="with-x">OPPO<i>×</i></li>-->
+            <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">×</i></li>
+            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark | getTrademarkName}}<i @click="removeTrademark">×</i></li>
+            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">{{attrValue | getAttrValue}}<i @click="removeProps(index)">×</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -164,6 +164,36 @@ export default {
       //   this.$router.push({name: 'Search', params: this.$route.params})
       // }
       this.$router.push({name: 'Search', params: this.$route.params})
+    },
+    removeKeyword() {
+      this.searchParams.keyword = undefined;
+      this.getData();
+      this.$emit('clearKeyword');
+      this.$router.push({name: 'Search', query: this.$route.query})
+    },
+    removeTrademark() {
+      this.searchParams.trademark = undefined;
+      this.getData();
+    },
+    removeProps(index) {
+      console.log(index)
+      this.searchParams.props.splice(index, 1);
+      this.getData();
+    },
+    // 自定义事件
+    trademarkInfo(trademark) {
+      console.log('trademarkInfo里的回调', trademark)
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getData();
+    },
+    attrInfo(attr, attrValue) {
+      console.log('attrInfo里的回调', attr, attrValue)
+      let val_props = `${attr.attrId}:${attrValue}:${attr.attrName}`
+      // 判断去重
+      if (this.searchParams.props.indexOf(val_props) == -1) {
+        this.searchParams.props.push(val_props);
+      }
+      this.getData();
     }
   },
   beforeMount() {
@@ -180,7 +210,7 @@ export default {
     this.getData();
   },
   computed: {
-      ...mapGetters(["goodsList"])
+    ...mapGetters(["goodsList"])
   },
   watch: {
     // 监听路由变化
@@ -193,6 +223,14 @@ export default {
       // 每次变化，就会再次整理
       Object.assign(this.searchParams, this.$route.query, this.$route.params)
       this.getData();
+    }
+  },
+  filters: {
+    getTrademarkName(trademark) {
+      return trademark.split(":")[1];
+    },
+    getAttrValue(attrValue) {
+      return attrValue.split(':')[1];
     }
   }
 
