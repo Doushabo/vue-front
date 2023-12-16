@@ -21,15 +21,17 @@
         <!--selector-->
         <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
+        <!-- ↑ ↓ -->
         <!--details-->
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- 排序的解构 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{active: isOne}" @click="changeOrder('1')">
+                  <a>综合<span v-show="isOne">{{ isOrder }}</span></a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#">销量</a>
                 </li>
                 <li>
@@ -37,13 +39,13 @@
                 </li>
                 <li>
                   <a href="#">评价</a>
+                </li> -->
+                <li :class="{active: isTwo}" @click="changeOrder('2')">
+                  <a>价格 <span v-show="isTwo">{{ isOrder }}</span></a>
                 </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
-                </li>
+                <!-- <li>
+                  <a href="#">价格↑ ↓</a>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -52,7 +54,10 @@
               <li class="yui3-u-1-5" v-for="(good) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"><img :src="good.defaultImg" /></a>
+                    <!-- <a href="item.html" target="_blank"><img :src="good.defaultImg" /></a> -->
+                    <RouterLink :to="`/detail/${good.id}`">
+                      <img :src="good.defaultImg" />
+                    </RouterLink>
                   </div>
                   <div class="price">
                     <strong>
@@ -75,7 +80,8 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
+          <PagIndex :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" @getPageNo="getPageNo"/>
+          <!-- <div class="fr page">
             <div class="sui-pagination clearfix">
               <ul>
                 <li class="prev disabled">
@@ -103,7 +109,7 @@
               </ul>
               <div><span>共10页&nbsp;</span></div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -112,7 +118,8 @@
 
 <script>
 import SearchSelector from "@/pages/Search/SearchSelector/SearchSelector.vue";
-import {mapGetters} from "vuex";
+import { RouterLink } from "vue-router";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "SearIndex",
@@ -129,8 +136,8 @@ export default {
         categoryName: "",
         // 关键字
         keyword: "",
-        // 排序
-        order: "",
+        // 排序：初始值应该是 综合 | 降序
+        order: "1:desc",
         // 页码
         pageNo: 1,
         // 每页数量
@@ -143,8 +150,9 @@ export default {
     }
   },
   components: {
-    SearchSelector
-  },
+    SearchSelector,
+    RouterLink
+},
   methods: {
     // 向服务器发送请求获取Search模块数据
     getData() {
@@ -180,6 +188,24 @@ export default {
       this.searchParams.props.splice(index, 1);
       this.getData();
     },
+    // 排序的操作
+    changeOrder(flag) {
+      // console.log(flag);
+      // 获取原始的升降序
+      let origin_order = this.searchParams.order;
+      // let origin_flag = origin_order.split(":")[0];
+      // let origin_sort = origin_order.split(":")[1];
+      let [origin_flag, origin_sort] = origin_order.split(":");
+      let new_order = "";
+
+      if(flag == origin_flag) {
+        new_order = `${origin_flag}:${origin_sort == 'desc' ? "asc" : "desc"}`;
+        this.searchParams.order = new_order;
+      } else {
+        new_order = `${flag}:${"desc"}`;
+        this.searchParams.order = new_order;
+      }
+    },  
     // 自定义事件
     trademarkInfo(trademark) {
       console.log('trademarkInfo里的回调', trademark)
@@ -193,6 +219,10 @@ export default {
       if (this.searchParams.props.indexOf(val_props) == -1) {
         this.searchParams.props.push(val_props);
       }
+      this.getData();
+    },
+    getPageNo(pageNo) {
+      this.searchParams.pageNo = pageNo;
       this.getData();
     }
   },
@@ -210,7 +240,21 @@ export default {
     this.getData();
   },
   computed: {
-    ...mapGetters(["goodsList"])
+    ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf('1') != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf('2') != -1;
+    },
+    isOrder() {
+      let flat = this.searchParams.order.indexOf('asc') != -1;
+      return flat ? "↑" : "↓";
+    },
+    // 获取search模块，一共展示多少
+    ...mapState({
+      total: state => state.search.searchList.total
+    })
   },
   watch: {
     // 监听路由变化

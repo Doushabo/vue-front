@@ -1,6 +1,7 @@
 // 当前模块： 对所有API接口进行统一管理
 import requests from "@/api/ajax";
 import mockAjax from "@/api/mockAjax";
+import { method } from "lodash";
 
 
 /**
@@ -52,3 +53,28 @@ export const reqGetSearchInfo = (params) => {
     })
 }
 
+/**
+ * 获取产品信息
+ * url: /api/item/{ skuId }
+ * GET
+ * 有参
+ */
+export const reqGetGoodsInfo = (skuId) => {
+    return requests({
+        url: `/item/${skuId}`,
+        method: "GET"
+    })
+}
+
+/**
+ * 添加到购物车(也可以对已有的物品进行数量改动)
+ * url: /api/cart/addToCart/{ skuId }/{ skuNum }
+ * POST
+ * 有参
+ */
+export const reqPostShopCart = (skuId, skuNum) => {
+    return requests({
+        url: `/cart/addToCart/${skuId}/${skuNum}`,
+        method: "POST"
+    })
+}

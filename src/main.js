@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
 import store from './store'
 // 引入mockServer.js
@@ -11,12 +13,19 @@ import "swiper/css/swiper.css"
 import TypeNav from "@/components/TypeNav/TypeNav.vue";
 // 轮播图 注册为全局组件
 import CarouselIndex from "@/components/Carousel/CarouselIndex.vue";
+// 分页器 注册为全局组件
+import PagIndex from "@/components/Pagination/PagIndex.vue";
 
+// 注册全局组建
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(CarouselIndex.name, CarouselIndex)
+Vue.component(PagIndex.name, PagIndex)
 
+// 使用
+Vue.use(ElementUI);
 
 Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue()
 
 
 new Vue({

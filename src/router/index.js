@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import HomeIndex from "@/pages/Home/HomeIndex";
-import SearIndex from "@/pages/Search/SearIndex";
-import LoginIndex from "@/pages/Login/LoginIndex";
-import RegiIndex from "@/pages/Register/RegiIndex";
+// 引入routes.js
+import routes from './routes.js'
 
 Vue.use(VueRouter)
 
@@ -27,60 +25,14 @@ VueRouter.prototype.replace = function(location, resole, reject) {
   }
 }
 
-const routes = [
-  {
-    path: '/home',
-    name: 'Home',
-    component: HomeIndex,
-    meta: {
-      show: true
-    }
-  },
-  {
-    path: '/search/:keyword?',
-    name: 'Search',
-    component: SearIndex,
-    meta: {
-      show: true
-    },
-    // props: true
-    // 常用用函数写法
-    // props: ($route) => {
-    //   return {
-    //     keyword: $route.params.keyword,
-    //     k: $route.query.k
-    //   }
-    // }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: LoginIndex,
-    meta: {
-      show: false
-    }
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: RegiIndex,
-    meta: {
-      show: false
-    }
-  },
-
-  // 重定向
-  {
-    path: '*',
-    redirect: '/home'
-  }
-
-]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  // 滚动行为，具体看文档
+  scrollBehavior(to, from) {
+    return {y: 0};
+  }
 })
 
 export default router
